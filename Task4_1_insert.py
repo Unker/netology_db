@@ -216,5 +216,3 @@ insertArtistsAlbums(artistsAlbums)
 insertStylesArtists(stylesArtists)
 insertCollectionsSongs(collectionsSongs)
 
-names = connection.execute(f"SELECT {table_column} FROM {table};").fetchmany(10)
-print(names)

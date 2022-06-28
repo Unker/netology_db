@@ -102,7 +102,7 @@ print('The collections in which present \"best artist\"')
 print(*nameCollections, sep = "\n")
 print()
 
-# название альбомов, в которых присутствуют исполнители более 1 жанра;
+# название альбомов, в которых присутствуют исполнители более 1 жанра
 albums = connection.execute(f"""
 	SELECT 
 		al.title, COUNT(DISTINCT(sa.idStyle))
@@ -123,7 +123,7 @@ print('The albums include artists of more than 1 Style')
 print(*albums, sep = "\n")
 print()
 
-# наименование треков, которые не входят в сборники;
+# наименование треков, которые не входят в сборники
 
 
 # исполнителя(-ей), написавшего самый короткий по продолжительности трек (теоретически таких треков может быть несколько);

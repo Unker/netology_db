@@ -12,7 +12,7 @@ connection = engine.connect()
 
 
 # количество исполнителей в каждом жанре
-styles = connection.execute(f"""
+stylesCount = connection.execute(f"""
 	SELECT 
 		s.styleName, COUNT(sa.idArtist)
 	FROM 
@@ -24,5 +24,23 @@ styles = connection.execute(f"""
 	;
 	""").fetchall()
 print('Number of Artists in each styles')
-print(*styles, sep = "\n")
+print(*stylesCount, sep = "\n")
+print()
+
+# количество треков, вошедших в альбомы 2019-2020 годов
+tracksCount = connection.execute(f"""
+	SELECT 
+		COUNT(t.id)
+	FROM 
+		Albums AS a
+	INNER JOIN Tracks AS t 
+		ON t.idAlbum = a.id
+	WHERE
+		date_part('year', a.year) >= 2019 
+		AND date_part('year', a.year) <= 2020
+
+	;
+	""").fetchall()
+print('Number of Artists in each styles')
+print(*tracksCount, sep = "\n")
 print()

@@ -116,7 +116,7 @@ albums = [
 	('alb1','2019-02-01'),('alb2','2001-04-05'), # for artist 1
 	('best friends','2021-08-14'),('rare','2018-01-31'), # for artist 2
 	('my songs','2018-12-25'), # for artist 3
-	('css','2000-11-14'), # for artist 4
+	('css','2020-11-14'), # for artist 4
 	('lalala','2025-10-05'), # for artist 5
 	('qwert','1980-01-08'), # for artist 6
 	('asd','2018-05-07'), # for artist 7
@@ -183,7 +183,7 @@ collectionsSongs = [
 	(collections[2][0], tracks[5][1]),
 
 	(collections[3][0], tracks[3][1]),
-	(collections[3][0], tracks[7][1]),
+	(collections[3][0], tracks[6][1]),
 
 	(collections[4][0], tracks[4][1]),
 	(collections[4][0], tracks[5][1]),
@@ -200,7 +200,7 @@ collectionsSongs = [
 	(collections[7][0], tracks[1][1]),
 
 	(collections[8][0], tracks[8][1]),
-	(collections[8][0], tracks[7][1]),
+	(collections[8][0], tracks[0][1]),
 	(collections[8][0], tracks[5][1]),
 
 	(collections[9][0], tracks[9][1]),

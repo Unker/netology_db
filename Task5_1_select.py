@@ -38,9 +38,94 @@ tracksCount = connection.execute(f"""
 	WHERE
 		date_part('year', a.year) >= 2019 
 		AND date_part('year', a.year) <= 2020
-
 	;
 	""").fetchall()
-print('Number of Artists in each styles')
+print('Count tracks in the range from 2019 to 2020')
 print(*tracksCount, sep = "\n")
 print()
+
+# средняя продолжительность треков по каждому альбому
+meanDurations = connection.execute(f"""
+	SELECT 
+		a.title, CAST(AVG(t.timeDuration) AS decimal(16,2))
+	FROM 
+		Albums AS a
+	LEFT JOIN Tracks AS t 
+		ON a.id = t.idAlbum
+	GROUP BY
+		a.id
+	;
+	""").fetchall()
+print('Mean duration tracks in each albums')
+print(*meanDurations, sep = "\n")
+print()
+
+# все исполнители, которые не выпустили альбомы в 2020 году
+artists = connection.execute(f"""
+	SELECT 
+		DISTINCT(ar.name)
+	FROM 
+		ArtistsAlbums AS aa
+	JOIN Artists AS ar 
+		ON aa.idArtist = ar.id
+	JOIN Albums AS al 
+		ON aa.idAlbum = al.id
+	WHERE
+		date_part('year', al.year) != 2020
+	;
+	""").fetchall()
+print('The Artists who have not released albums in 2020')
+print(*artists, sep = "\n")
+print()
+
+# названия сборников, в которых присутствует конкретный исполнитель (выберите сами);
+nameCollections = connection.execute(f"""
+	SELECT 
+		cl.name
+	FROM 
+		CollectionsSongs AS cs
+	JOIN Collections AS cl 
+		ON cs.idCollection = cl.id
+	JOIN Tracks AS tr 
+		ON cs.idTrack = tr.id
+	JOIN Albums AS al 
+		ON tr.idAlbum = al.id
+	JOIN ArtistsAlbums AS aa 
+		ON al.id = aa.idAlbum
+	JOIN Artists AS ar 
+		ON ar.id = aa.idArtist
+	WHERE
+		ar.name = 'best artist'
+	;
+	""").fetchall()
+print('The collections in which present \"best artist\"')
+print(*nameCollections, sep = "\n")
+print()
+
+# название альбомов, в которых присутствуют исполнители более 1 жанра;
+albums = connection.execute(f"""
+	SELECT 
+		al.title, COUNT(DISTINCT(sa.idStyle))
+	FROM 
+		Artists AS ar 
+	JOIN ArtistsAlbums AS aa 
+		ON ar.id = aa.idArtist
+	JOIN Albums AS al  
+		ON aa.idAlbum = al.id
+	JOIN StylesArtists AS sa 
+		ON ar.id = sa.idArtist
+	GROUP BY
+		al.title
+	;
+	""").fetchall()
+print('The albums include artists of more than 1 Style')
+print(*albums, sep = "\n")
+print()
+
+# наименование треков, которые не входят в сборники;
+
+
+# исполнителя(-ей), написавшего самый короткий по продолжительности трек (теоретически таких треков может быть несколько);
+
+
+# название альбомов, содержащих наименьшее количество треков.

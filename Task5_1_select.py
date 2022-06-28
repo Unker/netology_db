@@ -116,6 +116,7 @@ albums = connection.execute(f"""
 		ON ar.id = sa.idArtist
 	GROUP BY
 		al.title
+	HAVING COUNT(DISTINCT(sa.idStyle)) > 1
 	;
 	""").fetchall()
 print('The albums include artists of more than 1 Style')

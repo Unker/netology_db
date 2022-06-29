@@ -124,9 +124,72 @@ print(*albums, sep = "\n")
 print()
 
 # наименование треков, которые не входят в сборники
-
+tarcks = connection.execute(f"""
+	SELECT 
+		tr.name
+	FROM 
+		Tracks AS tr 
+	LEFT JOIN CollectionsSongs AS cs 
+		ON tr.id = cs.idTrack
+	WHERE
+		cs.idCollection IS NULL
+	;
+	""").fetchall()
+print('The name of tracks that are not included in the collections')
+print(*tarcks, sep = "\n")
+print()
 
 # исполнителя(-ей), написавшего самый короткий по продолжительности трек (теоретически таких треков может быть несколько);
+track = connection.execute(f"""
+	SELECT 
+		ar.name
+	FROM 
+		Tracks AS tr
+	JOIN Albums AS al 
+		ON al.id = tr.idAlbum
+	JOIN ArtistsAlbums AS aa 
+		ON al.id = aa.idAlbum
+	JOIN Artists AS ar 
+		ON ar.id = aa.idArtist
+	WHERE 
+		tr.timeDuration = (
+			SELECT 
+				MIN(timeDuration)
+			FROM 
+				Tracks
+		)
+	;
+	""").fetchall()
+print('The artist(s) who wrote the shortest track in duration')
+print(*track, sep = "\n")
+print()
 
+# название альбомов, содержащих наименьшее количество треков
+albums = connection.execute(f"""
+	SELECT 
+		al.title
+	FROM
+		Albums AS al
+	JOIN Tracks AS tr 
+		ON al.id = tr.idAlbum
+	GROUP BY
+		al.title
+	HAVING 
+		COUNT(tr.idAlbum) = (SELECT MIN(cnt)
+			FROM (
+				SELECT 
+					COUNT(tr.idAlbum) as cnt
+				FROM 
+					Albums AS al
+				JOIN Tracks AS tr 
+					ON al.id = tr.idAlbum
+				GROUP BY
+					al.title
+			) AS x
+	)
 
-# название альбомов, содержащих наименьшее количество треков.
+	;
+	""").fetchall()
+print('The albums containing the least number of tracks')
+print(*albums, sep = "\n")
+print()

@@ -110,7 +110,7 @@ def insertCollectionsSongs(collectionsSongs):
 
 
 artists = ['fellow','the end', 'ho ho ho', 'best artist', 
-'python songs', '123', 'has been hidden', 'new']
+'python songs', '123Art', 'has been hidden', 'new']
 styles = ['pop', 'rock', 'rap', 'folk', 'downtempo', 'dnb']
 albums = [
 	('alb1','2019-02-01'),('alb2','2001-04-05'), # for artist 1
@@ -136,7 +136,7 @@ tracks = [
 	(albums[6][0],	'long',			591), # for album 7
 	(albums[7][0],	'track123',		147), # for album 8
 	(albums[8][0],	'track my',		354), # for album 9
-	(albums[9][0],	'track my track',54), # for album 10
+	(albums[9][0],	'track my track',50), # for album 10
 ]
 collections = [('coll1','2019-02-01'),('coll2','2001-04-05'), 
 	('best collection','2021-08-14'),('temp','2018-01-31'),

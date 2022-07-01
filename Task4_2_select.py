@@ -50,8 +50,7 @@ print()
 collections = connection.execute(f"""
 	SELECT name
 	FROM Collections
-	WHERE date_part('year', year) >= 2018 
-	AND date_part('year', year) <= 2020
+	WHERE date_part('year', year) BETWEEN 2018 AND 2020
 	;
 	""").fetchall()
 print('Collections from 2018 to 2020 years')
@@ -73,7 +72,7 @@ print()
 tracks = connection.execute(f"""
 	SELECT name
 	FROM Tracks
-	WHERE name LIKE '%%my%%';
+	WHERE name ILIKE '%%my%%';
 	;
 	""").fetchall()
 print('Tracks that contain \"my\"')
